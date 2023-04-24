@@ -34,29 +34,32 @@ int selectDataNo(Product *p, int count){
     return no;
 }
 
-//배열데이터를 파일에 저장하는 함수
 void saveData(Product p[], int count){
-	FILE* fp;
+        FILE* fp;
 
-	//중량 가격 제품명
-	fp= fopen("product.txt","wt");
-	
-	
-	fclose(fp);
-	printf("저장됨!\n");
+        //중량 가격 제품명
+        fp= fopen("product.txt","wt");
+
+        for(int i = 0; i < count; i++){
+                fprintf(fp,"%s %d %d\n", p[i].name, p[i].price, p[i].weight);
+        }
+
+        fclose(fp);
+        printf("저장됨!\n");
 }
-
-
-//파일에서 데이터 불러오는 함수
 int loadData(Product *p){
-	int count=0;
-	FILE*fp;
+        int count=0;
+        FILE*fp;
+        fp = fopen("product.txt","r");
+        //파일 내용을 읽어와서 배열에 값 추가하
+        while(!feof(fp)){;
+                fscanf(fp,"%s %d %d\n" ,p->name, &p->weight, &p->price);
+                count++;
+        }
 
-	//파일 내용을 읽어와서 배열에 값 추가하기
 
-
-
-
-	printf("=> 로딩 성공!\n");
-	return count;
+        printf("=> 로딩 성공!\n");
+        fclose(fp);
+        return count;
 }
+
